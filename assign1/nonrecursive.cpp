@@ -145,9 +145,11 @@ void printmenu()
 
 int main()
 {
-    node *root;
     int ele;
+    Node* root;
+    Node* temp;
     int choice;
+    int cnt=0;
     do
     {
         printmenu();
