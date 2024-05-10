@@ -220,7 +220,7 @@ Node *deleteNode(Node *root, int key)
         while (succPar != NULL && succPar->left != succ)
             succPar = succPar->left;
         // Replace the data of the node to be deleted with the data of the successor
-        curr->data = succ->data;
+        curr->data = scc->data;
         // Delete the successor node
 }
     return root; // Add this line to return the modified root
