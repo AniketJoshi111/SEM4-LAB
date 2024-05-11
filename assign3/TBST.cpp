@@ -59,7 +59,7 @@ class TBST{
             }
             else if(key <par->data){
                 temp->left=par->left;
-                // temp->lthread=par->lthread;
+                //temp->lthread=par->lthread;
                 temp->right=par;
                 par->lthread=false;
                 par->left=temp;
@@ -97,18 +97,16 @@ class TBST{
         }
 
         void inorder(node* &root){
-            if(root==NULL){
-                cout<<"Tree Is Empty";
-                return;
+            if(root==nullptr){return ;}
+            node* ptr = root;
+            while(ptr->lthread==false){ptr = ptr->left;
             }
-            node* ptr=root;
-            while(ptr->lthread==false){
-                ptr=ptr->left;
+            while (ptr!=nullptr)
+            {
+                cout<< ptr->data <<" ";
+                ptr = inorderSuccessor(ptr);
             }
-            while (ptr!=NULL){
-                cout<<ptr->data<<" ";
-                ptr=inorderSuccessor(ptr);
-            }                  
+                          
         }
         void preorder(node* root){
             if (root == NULL) return;
@@ -124,66 +122,76 @@ class TBST{
         }
         //leaf
         node* caseA(node*& root,node*&par,node*&ptr){
-            if(par==NULL){//root node is to be deleted
-                root=NULL;
+            if(par==nullptr)
+            {
+                root = nullptr;
             }
-            else if(ptr==par->left){
-                par->lthread=true;
-                par->left=ptr->left;
+            if(ptr = par->left)
+            {
+                par->lthread = true;
+                par->left =ptr->left;
             }
-            else{
-                par->rthread=true;
-                par->right=ptr->right;
+            else
+            {
+                par->rthread = true;
+                par->right =ptr->right;
             }
-
             delete ptr;
             return root;
         }
         // one child 
         node* caseB(node*& root,node*&par,node*&ptr){
+            //step 1  :placing child to ptr
             node* child;
-            if(ptr->lthread==false){
-                child=ptr->left;
+            if(ptr->lthread==false)
+            {
+                child = ptr->left;
             }
-            else{
-                child=ptr->right;
+            else
+            {
+                child = ptr->right;
             }
+            // step2 : linking parent to child so to skip ptr
+            if(par==nullptr){ return child;}
 
-            if(par==NULL){
-                root=child;
+            if(ptr==par->left)
+            {
+                par->left = child;
             }
-            else if(ptr==par->left){
-                par->left=child;
+            else 
+            {
+                par->right= child;
             }
-            else{
-                par->right=child;
+            // step 3 : successsor and predecessor
+            node* s = inorderSuccessor(ptr);
+            node* p = inorderPredecessor(ptr);
+            if(ptr->lthread==false)
+            {
+                p->right = s;
             }
-            node* s=inorderSuccessor(ptr);
-            node* p=inorderPredecessor(ptr);
-            if(ptr->lthread==false){
-                p->right=s;
-            }
-            else if(ptr->rthread==false){
-                s->left=p;
+            else if(ptr->rthread==false)
+            {
+                s->left = p;
             }
             delete ptr;
             return root;
         }
         node* caseC(node*& root,node*&par,node*&ptr){
-            node* parSucc=ptr;
-            node* succ=ptr->right;
+            node* parSucc = ptr;
+            node* succ  = ptr->right;
 
-            while(succ->lthread==false){
-                parSucc=succ;
-                succ=succ->left;
+            while(succ->lthread == false)
+            {
+                parSucc = succ;
+                succ = succ->left;
             }
-
-            ptr->data=succ->data;
-
-            if(succ->lthread==true&&succ->rthread==true){
-                root=caseA(root,parSucc,succ);
+            // pohoch gaye 
+            ptr->data = succ->data;
+            if(succ->lthread==true && succ->rthread==true)
+            {
+                root = caseA(root,parSucc,succ);
             }
-            else{
+             else{
                 root=caseB(root,parSucc,succ);
             }
             return root;
@@ -239,15 +247,13 @@ class TBST{
 int main(){
     TBST obj;
     node* root=NULL;
+    int arr[9] = {8,3,10,1,6,14,4,7,13};
     for(int i=0;i<9;i++){
-        int val;
-        cout<<"Enter data:";
-        cin>>val;
-        root=obj.insert(root,val);
+        root=obj.insert(root,arr[i]);
     }
     obj.inorder(root);
     cout<<endl;
-    obj.delTBST(root,);
+    obj.delTBST(root,7);
     obj.inorder(root);
     return 0;
 }

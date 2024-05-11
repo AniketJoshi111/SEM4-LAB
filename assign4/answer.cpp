@@ -48,18 +48,19 @@ class Hashing{
             }
         }
         void Delete(int phNumber){
-            int hash=hashValue(phNumber);
-            arr[hash]=-1;
-            int dupHash=(hash+1)%10;
-            while(dupHash!=hash){
-                if(hashValue(arr[dupHash]) == hash){
-                    arr[hash]=arr[dupHash];
-                    arr[dupHash]=-1;
+            int hash = hashValue(phNumber);
+            arr[hash] = -1;
+            int duphash  = (hash+1)%10;
+            while(duphash!=hash)
+            {
+                if(hash == hashValue(arr[duphash]))
+                {
+                    arr[duphash] = arr[hash];
+                    arr[hash] = -1;
                     break;
                 }
-                dupHash=(dupHash+1)%10;
+                duphash = (duphash+1)%10;
             }
-
         }
         void display(){
             for(int i=0;i<10;i++){

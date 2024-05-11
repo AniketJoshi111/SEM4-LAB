@@ -133,7 +133,7 @@ void inorderCount(node* &root,int &cnt)
         cnt++;
     }
 }
-int leafnodes(node* &root)
+int leafnodes(node* root)
 {
    int cnt=0;
    inorderCount(root,cnt);
@@ -155,7 +155,7 @@ int main()
     int ele;
     int cnt = 0;
     node *temp;
-    int dis;
+    int dis=0;
     do
     {
         Menu();

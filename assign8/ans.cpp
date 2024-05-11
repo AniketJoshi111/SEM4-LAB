@@ -111,7 +111,7 @@ class OBST{
     int calcWeight(int i, int j){
 
         //this will calculate the summation of probs of all the nodes from i to j; i not included
-
+        
         int weight = 0;
         for(int k=i+1; k<=j; k++){
             weight += index[k].prob;

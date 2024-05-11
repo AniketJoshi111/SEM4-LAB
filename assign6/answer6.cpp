@@ -1,11 +1,10 @@
 #include<iostream>
-#include<queue>
-#include <stack>
-#include <vector>
+#include<vector>
 using namespace std;
 
 class node
 {
+    public:
     int data;
     node* next;
     node(int data)
@@ -13,8 +12,88 @@ class node
         this->data = data;
         this->next = nullptr;
     }
-
+    node() : data(0), next(nullptr) {} // Default constructor
 };
+
+class Stack
+{
+    private:
+    int arr[20];
+    int top;
+    public:
+    Stack(){top = -1;}
+    void push(int a)
+    {
+        if(top==20)
+        {
+            cout<<"Stack overflow\n";
+            return ;
+        }
+        top++;
+        arr[top] = a;
+    }
+    void pop()
+    {
+        if(top==-1) { cout<<"Stack underflow \n"; return ;}
+        top--;
+    }
+    bool isEmpty()
+    {
+        return (top==-1);
+    }
+    int topi()
+    {
+        if(top==-1)
+        { cout<<"NO element \n";
+        return -1;}
+        return arr[top];
+    }
+};
+
+class Queue
+{
+    private:
+    int arr[20];
+    int front_index; 
+    int rear_index;
+    public:
+    Queue()
+    {
+        front_index = rear_index = -1;
+    }
+    void enqueue(int v)
+    {
+        if(rear_index==19)
+        {
+            cout<<"queue is full";
+            return ;
+        }
+        arr[++rear_index] = v;
+    }
+    int front()
+    {
+        if(front_index==-1 || front_index > rear_index)
+        {
+            cout<<"no element";
+            return -1;
+        }
+        return arr[front_index];
+    }
+    void dequeue()
+    {
+         if(front_index==-1 || front_index > rear_index)
+        {
+            cout<<"no element";
+            return ;
+        }
+        front_index++;
+    }
+    bool empty()
+    {
+        return (front_index == -1 || front_index > rear_index);
+    }
+};
+
 void insertInGraph(node* arr[] , int u,int v)
 {
     node* head1 = arr[u];
@@ -35,14 +114,14 @@ void insertInGraph(node* arr[] , int u,int v)
 void bfs(node* arr[], int n,int start)
 {
     vector<bool> visited(n,false);
-    queue<int> q;
+    Queue q;
 
-    q.push(start); // add
+    q.enqueue(start); // add
     visited[start] = true;
     while(!q.empty())
     {
         int u = q.front();
-        q.pop();
+        q.dequeue();
         cout<< u <<" ";      // visit 
 
         node* temp = arr[u]->next;
@@ -53,6 +132,7 @@ void bfs(node* arr[], int n,int start)
             {
                 cout << v <<" ";
                 visited[v] = true;
+                q.enqueue(v);
             }
             temp = temp->next;
         }
@@ -61,13 +141,13 @@ void bfs(node* arr[], int n,int start)
 void dfs(node* arr[], int n, int start)
 {
     vector<bool> visited(n, false);
-    stack<int> s;
+    Stack s;
 
     s.push(start); // add
     visited[start] = true;
-    while (!s.empty())  
+    while (!s.isEmpty())  
     {
-        int u = s.top();
+        int u = s.topi();
         s.pop();
         cout << u << " "; // visit
 
@@ -115,8 +195,11 @@ int main()
     insertInGraph(arr, 4, 6);   
     insertInGraph(arr, 5, 7);
     insertInGraph(arr, 6, 7);
-    dfs()
-    displayList(arr,10);
+    dfs(arr, 20, 0);
+    cout << endl;
+    bfs(arr, 20, 0);
+    cout << endl;
+    displayList(arr, 20);
 
     return 0;
 }

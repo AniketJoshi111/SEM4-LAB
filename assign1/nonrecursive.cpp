@@ -65,78 +65,90 @@ int Create(node *root)
 
 void preorder(node *root)
 {
-    if(root==nullptr){ return ;}
-    node* t = root;
-    stack<node*> st;
-    while(t!=nullptr)
+    if (root == nullptr)
     {
-        cout<<t->data<<" ";
+        return;
+    }
+    node *t = root;
+    stack<node *> st;
+    while (t != nullptr)
+    {
+        cout << t->data << " ";
         st.push(t);
         t = t->left;
     }
-    while(!st.empty())
+    while (!st.empty())
     {
-        t = st.top(); st.pop();
+        t = st.top();
+        st.pop();
         t = t->right;
-        while(t!=nullptr)
+        while (t != nullptr)
         {
-            cout<<t->data<<" ";
+            cout << t->data << " ";
             st.push(t);
             t = t->left;
         }
     }
-    return ;
+    return;
 }
 void inorder(node *root)
 {
-    if(root==nullptr){ return ;}
-    node* t = root;
-    stack<node*> st;
-    while(t!=nullptr)
+    if (root == nullptr)
+    {
+        return;
+    }
+    node *t = root;
+    stack<node *> st;
+    while (t != nullptr)
     {
         st.push(t);
         t = t->left;
     }
-    while(!st.empty())
+    while (!st.empty())
     {
-        t = st.top(); st.pop();
-        cout<<t->data<<" ";
+        t = st.top();
+        st.pop();
+        cout << t->data << " ";
         t = t->right;
-        while(t!=nullptr)
+        while (t != nullptr)
         {
-            
             st.push(t);
             t = t->left;
         }
     }
-    return ;
+    return;
 }
-void postorder(node* root)
+void postorder(node *root)
 {
-    if(root==nullptr){return ;}
-    stack<node*> s1,s2;
-    s1.push(root);
-    while(!s1.empty())
+    if (root == nullptr)
     {
-        node* t = s1.top(); s1.pop();
-        s2.push(t);
-        if(t->left)
+        return 0;
+    }
+    stack<node *> s1, s2;
+    s1.push(root);
+    while (!s1.empty())
+    {
+        node *temp = s1.top();
+        s1.pop();
+        s2.push(temp);
+        if (temp->left)
         {
-            s1.push(t->left);
+            s2.push(temp->left);
         }
-        if(t->right)
+        if (temp->right)
         {
-            s1.push(t->right);
+            s2.push(temp->right);
         }
     }
-    while(!s2.empty())
+    while (!s2.empty())
     {
-        cout << s2.top()->data << endl;
-        
+        cout << s2.top()->data << " ";
+        s2.pop();
     }
 }
 void printmenu()
-{   cout<<"NON RECURSIVE\n";
+{
+    cout << "NON RECURSIVE\n";
     cout << "1.Create Tree\n";
     cout << "2.Preorder \n";
     cout << "3.Inorder \n";
@@ -146,10 +158,10 @@ void printmenu()
 int main()
 {
     int ele;
-    Node* root;
-    Node* temp;
+    Node *root;
+    Node *temp;
     int choice;
-    int cnt=0;
+    int cnt = 0;
     do
     {
         printmenu();
@@ -163,21 +175,21 @@ int main()
             Create(root);
             break;
         case 2:
-        cout<<"Preorder traversal :";
-        preorder(root);
-        break;
+            cout << "Preorder traversal :";
+            preorder(root);
+            break;
         case 2:
-        cout<<"Inorder traversal :";
-        inorder(root);
-        break;
+            cout << "Inorder traversal :";
+            inorder(root);
+            break;
         case 2:
-        cout<<"Postorder traversal :";
-        postorder(root);
-        break;
+            cout << "Postorder traversal :";
+            postorder(root);
+            break;
         default:
             break;
         }
-    } while (choice!=4);
+    } while (choice != 4);
 
     return 0;
 }
